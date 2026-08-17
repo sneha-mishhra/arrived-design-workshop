@@ -167,14 +167,6 @@ export function HeroSection({ event, formActive }: HeroSectionProps) {
           >
             No prep needed
           </Sticker>
-          <Sticker
-            data-hero-sticker
-            tone="ink"
-            rotate={5}
-            className="absolute left-[8%] top-[66%]"
-          >
-            Free seat, no catch
-          </Sticker>
         </div>
       </div>
       </HeroIntro>

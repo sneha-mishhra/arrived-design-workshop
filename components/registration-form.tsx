@@ -87,12 +87,11 @@ export function RegistrationForm({
           />
         </div>
         <div className="grid w-full gap-1.5">
-          <Label htmlFor="last_name">Last name *</Label>
+          <Label htmlFor="last_name">Last name</Label>
           <Input
             id="last_name"
             name="last_name"
             type="text"
-            required
             placeholder="Last name"
             autoComplete="family-name"
           />
@@ -111,17 +110,27 @@ export function RegistrationForm({
         />
       </div>
 
-      {/* Not in the CMS field list, so it travels to the API as a custom data
-          field on the registration. It is the one answer worth collecting here:
-          it tells you who is actually a designer before they walk in. */}
+      {/* Neither of these is in the CMS field list, so both travel to the API
+          as custom data fields on the registration. Optional on purpose: they
+          are useful for spotting who is already working as a designer, but not
+          worth losing a signup over. */}
       <div className="grid w-full gap-1.5">
-        <Label htmlFor="portfolio">Portfolio link *</Label>
+        <Label htmlFor="portfolio">Portfolio link</Label>
         <Input
           id="portfolio"
           name="portfolio"
           type="url"
-          required
           placeholder="https://your-work.com"
+        />
+      </div>
+
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="linkedin">LinkedIn</Label>
+        <Input
+          id="linkedin"
+          name="linkedin"
+          type="url"
+          placeholder="https://linkedin.com/in/…"
         />
       </div>
 
