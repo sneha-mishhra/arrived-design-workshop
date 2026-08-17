@@ -31,18 +31,36 @@ const hand = Just_Me_Again_Down_Here({
   weight: ["400"],
 });
 
+// The CMS description is a long paragraph, which is right for the page body and
+// wrong for a link preview: LinkedIn and X truncate at roughly 150 characters,
+// so a shared link would break off mid-sentence. This is the short version that
+// survives the cut, with the CMS still winning for the page title.
+const SHARE_TITLE = "Arrived Design Workshop";
+const SHARE_DESCRIPTION =
+  "An hour on how event design work happens at Arrived, and how to get paid doing it. Free, online, Thursday 20 August.";
+
 export async function generateMetadata(): Promise<Metadata> {
   const { event } = await getPublicEvent();
   const { metadata } = event;
 
+  const title = metadata.title?.trim() || event.name.trim() || SHARE_TITLE;
+
   return {
-    title: metadata.title || event.name,
-    description: metadata.description || "",
+    title,
+    description: SHARE_DESCRIPTION,
     ...(metadata.allow_search_engine_indexing === false && {
       robots: "noindex, nofollow",
     }),
     openGraph: {
+      title,
+      description: SHARE_DESCRIPTION,
+      type: "website",
       ...(metadata.image_url && { images: [metadata.image_url] }),
+    },
+    twitter: {
+      card: metadata.image_url ? "summary_large_image" : "summary",
+      title,
+      description: SHARE_DESCRIPTION,
     },
   };
 }

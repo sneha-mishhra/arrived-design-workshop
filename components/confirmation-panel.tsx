@@ -14,6 +14,7 @@ import {
   VideoIcon,
 } from "./icons";
 import { Reveal } from "./scroll-reveal";
+import { ShareRow } from "./share-row";
 import { Sticker } from "./sticker";
 
 /**
@@ -45,6 +46,14 @@ export function ConfirmationPanel({
     minute: "2-digit",
     timeZoneName: "short",
   });
+
+  // Written from the attendee's point of view, since they are the one posting
+  // it. Names the date so the link does not depend on the card rendering.
+  const shareMessage = [
+    "Just signed up for the Arrived Design Workshop by Happily.",
+    "An hour on how event design work happens, and how to get paid doing it.",
+    weekday && date ? `Free and online, ${weekday} ${date}.` : "Free and online.",
+  ].join(" ");
 
   // The CMS has no end time for this event, and the starter hides the calendar
   // button whenever one is missing. An hour past the start matches the agenda,
@@ -210,6 +219,8 @@ export function ConfirmationPanel({
                 Back to the workshop page
               </a>
             </div>
+
+            <ShareRow message={shareMessage} />
           </div>
         </Reveal>
       </div>
