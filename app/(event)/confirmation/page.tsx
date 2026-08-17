@@ -5,6 +5,10 @@ import { text } from "@/components/helpers";
 import { getEventEnv, getEventId } from "@/lib/happily/config";
 import { getPublicAttendees, getPublicEvent } from "@/lib/happily/queries";
 
+// Same reasoning as the event page: the pass and its details come from the CMS,
+// so a build-time snapshot would go stale the moment the schedule moves.
+export const revalidate = 60;
+
 export default async function ConfirmationPage() {
   const eventId = getEventId();
   const env = getEventEnv();

@@ -11,6 +11,11 @@ import { EventShell } from "@/components/event-shell";
 import { styleValue } from "@/components/helpers";
 import { getPublicEvent } from "@/lib/happily/queries";
 
+// The layout fetches the event too (metadata, design tokens, nav), so it needs
+// the same revalidation as the pages beneath it. Left static, a CMS change to
+// the title or colours would stay stale even once the page body refreshed.
+export const revalidate = 60;
+
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
