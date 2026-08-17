@@ -6,7 +6,7 @@ import { formatEventDate, text } from "./helpers";
 import { HeroIntro } from "./hero-intro";
 import { ScrollLink } from "./scroll-link";
 import { SelectionFrame } from "./selection-frame";
-import { CursorTag, Sticker } from "./sticker";
+import { Sticker } from "./sticker";
 
 type HeroSectionProps = {
   event: PublicEventData["event"];
@@ -173,14 +173,8 @@ export function HeroSection({ event, formActive }: HeroSectionProps) {
             rotate={5}
             className="absolute left-[8%] top-[66%]"
           >
-            Bring a question
+            Free seat, no catch
           </Sticker>
-          {/* The live cursor covers "you", so only the second presence stays. */}
-          <CursorTag
-            name="sneha"
-            color="#E0396B"
-            className="absolute left-[19%] top-[38%]"
-          />
         </div>
       </div>
       </HeroIntro>
