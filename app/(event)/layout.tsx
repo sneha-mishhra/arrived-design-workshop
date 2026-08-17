@@ -8,7 +8,7 @@ import {
 import "../globals.css";
 
 import { EventShell } from "@/components/event-shell";
-import { styleValue } from "@/components/helpers";
+import { formatEventDate, styleValue } from "@/components/helpers";
 import { getPublicEvent } from "@/lib/happily/queries";
 
 // The layout fetches the event too (metadata, design tokens, nav), so it needs
@@ -40,9 +40,12 @@ const hand = Just_Me_Again_Down_Here({
 // wrong for a link preview: LinkedIn and X truncate at roughly 150 characters,
 // so a shared link would break off mid-sentence. This is the short version that
 // survives the cut, with the CMS still winning for the page title.
+//
+// The day is read from the event rather than written in, so the same codebase
+// can serve more than one session without a stale date in the share card.
 const SHARE_TITLE = "Arrived Design Workshop";
-const SHARE_DESCRIPTION =
-  "An hour on how event design work happens at Arrived, and how to get paid doing it. Free, online, Thursday 20 August.";
+const SHARE_INTRO =
+  "An hour on how event design work happens at Arrived, and how to get paid doing it.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { event } = await getPublicEvent();
@@ -50,22 +53,31 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = metadata.title?.trim() || event.name.trim() || SHARE_TITLE;
 
+  const when = formatEventDate(event.start_date, event.timezone, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+  const description = when
+    ? `${SHARE_INTRO} Free, online, ${when}.`
+    : `${SHARE_INTRO} Free and online.`;
+
   return {
     title,
-    description: SHARE_DESCRIPTION,
+    description,
     ...(metadata.allow_search_engine_indexing === false && {
       robots: "noindex, nofollow",
     }),
     openGraph: {
       title,
-      description: SHARE_DESCRIPTION,
+      description,
       type: "website",
       ...(metadata.image_url && { images: [metadata.image_url] }),
     },
     twitter: {
       card: metadata.image_url ? "summary_large_image" : "summary",
       title,
-      description: SHARE_DESCRIPTION,
+      description,
     },
   };
 }
